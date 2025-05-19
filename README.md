@@ -24,6 +24,7 @@ NC News - React client for a social news aggregation, web content rating and dis
 │  └─ main.jsx
 ├─ .env.example
 ├─ .gitignore
+├─ .prettierrc.json
 ├─ .eslint.config.js
 ├─ index.html
 ├─ package-lock.json
