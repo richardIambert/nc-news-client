@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getInitials } from '../../../services/formatting';
 import { SignOutButton, UnauthenticatedLinks, useAuth } from '../../Auth';
 import { Avatar } from './Avatar';
-import { getInitials } from '../../../services/formatting/formatName';
 
 export const Session = () => {
-  const { session, user } = useAuth();
+  const {
+    state: { session, user, isLoading, error },
+  } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   // TODO: Create useClickOutside hook to close dropdown
 
   const toggleIsOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  // TODO: Extract Loading component
+  if (isLoading) return <p>Loading...</p>;
 
   const { first_name, last_name } = user;
   const initials = getInitials(`${first_name} ${last_name}`);

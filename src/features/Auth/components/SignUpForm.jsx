@@ -4,29 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { Spinner } from '../../../components';
 
 export const SignUpForm = () => {
-  const { signup } = useAuth();
+  const { signup, isLoading, error } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullname, setFullname] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
-    try {
-      event.preventDefault();
-      setError(null);
-      setIsLoading(true);
-      const { data, error } = await signup(email, password, fullname);
-      if (error) throw new Error(error);
-      if (data) navigate('/feed');
-    } catch (error) {
-      setEmail('');
-      setPassword('');
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
+    event.preventDefault();
+    await signup(email, password, fullname);
+    navigate('/feed');
   };
 
   return (
