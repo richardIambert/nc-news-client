@@ -1,15 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthenticationContext';
 
 export const AuthenticatedRoute = ({ children, redirectPath = '/signin' }) => {
-  const {
-    state: { session, isLoading, error },
-  } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  // TODO: Extract Loading component
-  if (isLoading) return <p>Loading</p>;
+  // TODO: Extract loading component
+  if (isLoading) return <p>Loading...</p>;
 
-  if (!session || error) {
+  if (!user) {
     return (
       <Navigate
         to={redirectPath}

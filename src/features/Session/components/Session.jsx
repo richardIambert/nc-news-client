@@ -5,9 +5,7 @@ import { SignOutButton, UnauthenticatedLinks, useAuth } from '../../Auth';
 import { Avatar } from './Avatar';
 
 export const Session = () => {
-  const {
-    state: { session, user, isLoading, error },
-  } = useAuth();
+  const { session, user, isLoading, error } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   // TODO: Create useClickOutside hook to close dropdown
 
