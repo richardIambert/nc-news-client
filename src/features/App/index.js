@@ -1,1 +1,3 @@
-export { App } from './component';
+// Components
+export { Header } from './components/Header';
+export { Logo } from './components/Logo';

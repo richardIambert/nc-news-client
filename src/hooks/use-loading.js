@@ -10,9 +10,9 @@ export const useLoading = (fn) => {
       try {
         setIsLoading(true);
         setError(null);
-        const { data: response, error } = await fn();
+        const { data, error } = await fn();
         if (error) throw new Error(error);
-        setData(response);
+        setData(data);
       } catch (error) {
         setData(null);
         setError(error);

@@ -7,20 +7,28 @@ NC News - React client for a social news aggregation, web content rating and dis
 ```bash
 .
 ├─ src/
-│  ├─ components/
 │  ├─ configuration/
-│  │  └─ supabase.js
-│  ├─ contexts/
+│  │  └─ supabase/
+│  │     └─ index.js
 │  ├─ features/
-│  │  └─ App/
-│  │     ├─ component.js
+│  │  ├─ Auth/
+│  │  │  ├─ components
+│  │  │  │  ├─ SignInForm.jsx
+│  │  │  │  └─ SignUpForm.jsx
+│  │  │  ├─ pages
+│  │  │  │  ├─ SignInPage.jsx
+│  │  │  │  └─ SignUpPage.jsx
+│  │  │  └─ index.js
+│  │  └─ Feed/
+│  │     ├─ components
+│  │     ├─ pages
+│  │     │  └─ FeedPage.jsx
 │  │     └─ index.js
 │  ├─ hooks/
 │  │  ├─ index.js
 │  │  └─ use-loading.js
-│  ├─ pages/
-│  ├─ services/
 │  ├─ index.css
+│  ├─ router.jsx
 │  └─ main.jsx
 ├─ .env.example
 ├─ .gitignore
