@@ -6,30 +6,43 @@ NC News - React client for a social news aggregation, web content rating and dis
 
 ```bash
 .
+├─ /planning
 ├─ src/
+│  ├─ components/
+│  │  ├─ icons/
+│  │  └─ supabase/
 │  ├─ configuration/
 │  │  └─ supabase/
-│  │     └─ index.js
 │  ├─ features/
-│  │  ├─ Auth/
-│  │  │  ├─ components
-│  │  │  │  ├─ SignInForm.jsx
-│  │  │  │  └─ SignUpForm.jsx
-│  │  │  ├─ pages
-│  │  │  │  ├─ SignInPage.jsx
-│  │  │  │  └─ SignUpPage.jsx
+│  │  ├─ App/
+│  │  │  ├─ components/
 │  │  │  └─ index.js
-│  │  └─ Feed/
-│  │     ├─ components
-│  │     ├─ pages
-│  │     │  └─ FeedPage.jsx
+│  │  ├─ Article/
+│  │  │  ├─ components/
+│  │  │  ├─ contexts/
+│  │  │  ├─ pages/
+│  │  │  └─ index.js
+│  │  ├─ Auth/
+│  │  │  ├─ components/
+│  │  │  ├─ contexts/
+│  │  │  ├─ pages/
+│  │  │  └─ index.js
+│  │  ├─ Comment/
+│  │  │  ├─ components/
+│  │  │  ├─ contexts/
+│  │  │  └─ index.js
+│  │  ├─ Session/
+│  │  │  ├─ components/
+│  │  │  └─ index.js
+│  │  └─ Topic/
+│  │     ├─ components/
 │  │     └─ index.js
 │  ├─ hooks/
 │  │  ├─ index.js
 │  │  └─ use-loading.js
 │  ├─ index.css
-│  ├─ router.jsx
-│  └─ main.jsx
+│  ├─ main.jsx
+│  └─ router.jsx
 ├─ .env.example
 ├─ .gitignore
 ├─ .prettierrc.json
