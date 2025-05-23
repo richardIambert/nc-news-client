@@ -97,7 +97,7 @@ export const ArticleContextProvider = ({ children }) => {
     (async () => {
       try {
         dispatch({ type: GET_ARTICLES_START });
-        const { data, error } = await supabase.from('articles').select('*');
+        const { data, error } = await supabase.from('article_with_author').select('*');
         if (error) throw new Error(error);
         dispatch({ type: GET_ARTICLES_SUCCESS, payload: data });
       } catch (error) {

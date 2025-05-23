@@ -54,15 +54,8 @@ export const ArticlePage = () => {
   // TODO: Extract NotFound page
   if (!currentArticle) return <p>Not Found</p>;
 
-  const {
-    title,
-    topic,
-    author = 'User Deleted', // TODO: update select article to join on profile where user_ids are equal
-    body,
-    created_at,
-    article_img_url,
-    votes,
-  } = currentArticle;
+  const { title, topic, body, created_at, article_img_url, votes, first_name, last_name } =
+    currentArticle;
 
   return (
     <>
@@ -72,7 +65,7 @@ export const ArticlePage = () => {
           <TopicPill title={topic} />
           <h2 className="text-4xl">{title}</h2>
           <FlexGroup>
-            <ArticleAuthor author={author} />
+            <ArticleAuthor author={`${first_name} ${last_name}`} />
             <BulletSeparator />
             <ArticleAge createdAt={created_at} />
             <BulletSeparator />
