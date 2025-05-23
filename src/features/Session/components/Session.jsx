@@ -20,22 +20,36 @@ export const Session = () => {
   const initials = getInitials(`${first_name} ${last_name}`);
 
   return session ? (
-    <div>
-      <button onClick={toggleIsOpen}>
+    <div className="relative">
+      <button
+        onClick={toggleIsOpen}
+        className="rounded-full cursor-pointer outline-2 outline-dashed outline-offset-2 outline-transparent focus:outline-red-500 transition-colors"
+      >
         <Avatar initials={initials} />
       </button>
-      <nav>
-        <header>
+      <nav
+        className={`w-64 z-10 absolute mt-2 right-0 bg-white rounded-lg shadow-lg overflow-hidden ${
+          isOpen ? 'block' : 'hidden'
+        }`}
+      >
+        <header className="p-4 flex flex-col gap-2 items-center border-b border-neutral-200">
           <Avatar initials={initials} />
           <h3>
             {first_name} {last_name}
           </h3>
         </header>
-        <ol>
+        <ol className="divide-y divide-neutral-200">
           <li>
-            <Link to="/me">My Profile</Link>
+            <Link
+              to="/me"
+              className="w-full p-4 block hover:bg-neutral-100 transition-colors cursor-pointer text-left"
+            >
+              My Profile
+            </Link>
           </li>
-          <SignOutButton />
+          <li>
+            <SignOutButton />
+          </li>
         </ol>
       </nav>
     </div>
