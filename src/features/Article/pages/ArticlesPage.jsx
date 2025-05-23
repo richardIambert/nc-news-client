@@ -1,10 +1,12 @@
 import { Header } from '../../App';
-export const FeedPage = () => {
+import { ArticleList } from '../../Article';
+
+export const ArticlesPage = () => {
   return (
     <>
       <Header />
       <main>
-        <h2>Feed</h2>
+        <ArticleList />
       </main>
     </>
   );
