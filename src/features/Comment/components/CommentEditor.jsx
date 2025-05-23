@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../../../configuration/supabase';
 import {
   useComment,
@@ -10,20 +10,27 @@ import {
 export const CommentEditor = ({ articleId }) => {
   const { isLoading, error, dispatch } = useComment();
   const [body, setBody] = useState('');
+  const [isBodyEmpty, setIsBodyEmpty] = useState(true);
+
+  useEffect(() => {
+    setIsBodyEmpty(body.trim().length === 0);
+  }, [body]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      // dispatch({ type: POST_COMMENT_START });
-      const { data, error } = await supabase
-        .from('comments')
-        .insert({ article_id: articleId, body })
-        .select();
-      if (error) throw new Error(error);
-      setBody('');
-      dispatch({ type: POST_COMMENT_SUCCESS, payload: data[0] });
-    } catch (error) {
-      dispatch({ type: POST_COMMENT_ERROR, payload: error });
+    if (!isBodyEmpty) {
+      try {
+        dispatch({ type: POST_COMMENT_START });
+        const { data, error } = await supabase
+          .from('comments')
+          .insert({ article_id: articleId, body })
+          .select();
+        if (error) throw new Error(error);
+        setBody('');
+        dispatch({ type: POST_COMMENT_SUCCESS, payload: data[0] });
+      } catch (error) {
+        dispatch({ type: POST_COMMENT_ERROR, payload: error });
+      }
     }
   };
 
@@ -43,8 +50,10 @@ export const CommentEditor = ({ articleId }) => {
       ></textarea>
       <button
         type="submit"
-        disabled={isLoading}
-        className="absolute left-6 bottom-6 rounded-full px-4 py-2 bg-white cursor-pointer"
+        disabled={isLoading || isBodyEmpty}
+        className={`absolute left-6 bottom-6 rounded-full px-4 py-2 bg-white ${
+          isBodyEmpty ? 'cursor-not-allowed' : 'cursor-pointer'
+        }`}
       >
         Comment
       </button>
