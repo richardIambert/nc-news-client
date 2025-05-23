@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../../configuration/supabase';
 import {
@@ -9,7 +9,7 @@ import {
   UPDATE_CURRENT_ARTICLE,
   UPDATE_CURRENT_ARTICLE_ID,
 } from '../contexts/ArticleContext';
-import { CommentContextProvider, CommentWrapper } from '../../Comment';
+import { CommentContextProvider, CommentToggleButton, CommentWrapper } from '../../Comment';
 import { ArticleAge } from '../components/ArticleAge';
 import { ArticleAuthor } from '../components/ArticleAuthor';
 import { ArticleEdited } from '../components/ArticleEdited';
@@ -21,6 +21,7 @@ import { TopicPill } from '../../Topic/components/TopicPill';
 export const ArticlePage = () => {
   const { article_id } = useParams();
   const { articles, currentArticle, currentArticleId, dispatch } = useArticle();
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -46,32 +47,39 @@ export const ArticlePage = () => {
     })();
   }, []);
 
+  const toggleIsCommentOpen = () => {
+    setIsCommentOpen(!isCommentOpen);
+  };
+
   // TODO: Extract NotFound page
   if (!currentArticle) return <p>Not Found</p>;
 
   const {
     title,
     topic,
-    author = 'User Deleted',
+    author = 'User Deleted', // TODO: update select article to join on profile where user_ids are equal
     body,
     created_at,
     article_img_url,
+    votes,
   } = currentArticle;
 
   return (
     <>
       <Header />
-      <main className="px-6 py-12 space-y-6">
-        <TopicPill title={topic} />
-        <h2 className="text-4xl">{title}</h2>
-        <FlexGroup>
-          <ArticleAuthor author={author} />
-          <BulletSeparator />
-          <ArticleAge createdAt={created_at} />
-          <BulletSeparator />
-          <ArticleEdited />
-        </FlexGroup>
-        <div className="bg-white rounded-lg shadow">
+      <main className="px-6 py-12 space-y-8">
+        <header className="space-y-4">
+          <TopicPill title={topic} />
+          <h2 className="text-4xl">{title}</h2>
+          <FlexGroup>
+            <ArticleAuthor author={author} />
+            <BulletSeparator />
+            <ArticleAge createdAt={created_at} />
+            <BulletSeparator />
+            <ArticleEdited />
+          </FlexGroup>
+        </header>
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {article_img_url && (
             <img
               src={article_img_url}
@@ -80,11 +88,20 @@ export const ArticlePage = () => {
             />
           )}
           <p className="p-6">{body}</p>
+          <CommentContextProvider>
+            <FlexGroup className="p-4 gap-1">
+              <CommentToggleButton onClick={toggleIsCommentOpen} />
+              <ArticleLikeButton
+                articleId={article_id}
+                likes={votes}
+              />
+            </FlexGroup>
+            <CommentWrapper
+              articleId={currentArticleId}
+              isOpen={isCommentOpen}
+            />
+          </CommentContextProvider>
         </div>
-        <ArticleLikeButton />
-        <CommentContextProvider>
-          <CommentWrapper articleId={currentArticleId} />
-        </CommentContextProvider>
       </main>
     </>
   );
