@@ -20,7 +20,6 @@ export const CommentEditor = ({ articleId }) => {
         .insert({ article_id: articleId, body })
         .select();
       if (error) throw new Error(error);
-      console.log(data, '>>>>> insert op'); // TODO: remove
       setBody('');
       dispatch({ type: POST_COMMENT_SUCCESS, payload: data[0] });
     } catch (error) {

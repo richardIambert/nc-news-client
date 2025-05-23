@@ -69,6 +69,7 @@ const reducer = (state, { type, payload }) => {
         articles: [...state.articles].map((article) =>
           article.article_id === payload ? { ...article, votes: article.votes + 1 } : article
         ),
+        currentArticle: { ...state.currentArticle, votes: state.currentArticle.votes + 1 },
       };
     }
     case 'POST_ARTICLE_LIKE_ERROR': {
