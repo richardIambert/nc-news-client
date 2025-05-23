@@ -13,7 +13,7 @@ export const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signup(email, password, fullname);
-    navigate('/feed');
+    navigate('/articles');
   };
 
   return (

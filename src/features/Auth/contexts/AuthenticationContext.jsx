@@ -30,30 +30,40 @@ export const AuthenticationContextProvider = ({ children }) => {
     const {
       data: { listener },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      setSession(session || null);
       setUser(session?.user.user_metadata || null);
     });
 
     return () => listener?.subscription.unsubscribe();
   }, []);
 
-  const signup = (email, password, fullname) => {
+  const signup = async (email, password, fullname) => {
     const [first_name, last_name] = getFirstLastNames(fullname);
-    return supabase.auth
-      .signUp({
+    try {
+      return await supabase.auth.signUp({
         email,
         password,
         options: { data: { first_name, last_name } },
-      })
-      .catch(console.error);
+      });
+    } catch (message) {
+      return console.error(message);
+    }
   };
 
-  const signin = (email, password) => {
-    return supabase.auth.signInWithPassword({ email, password }).catch(console.error);
+  const signin = async (email, password) => {
+    try {
+      return await supabase.auth.signInWithPassword({ email, password });
+    } catch (message) {
+      return console.error(message);
+    }
   };
 
   const signout = async () => {
-    return supabase.auth.signOut().catch(console.error);
+    try {
+      return await supabase.auth.signOut();
+    } catch (message) {
+      return console.error(message);
+    }
   };
 
   return (

@@ -1,16 +1,22 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { AuthenticatedRoute, SignInPage, SignUpPage } from './features/Auth';
-import { FeedPage } from './features/Feed';
+import { ArticleContextProvider, ArticlePage, ArticlesPage } from './features/Article';
 
 export const router = createBrowserRouter([
-  { path: '/', element: <Navigate to="/feed" /> },
+  { path: '/', element: <Navigate to="/articles" /> },
   {
-    path: '/feed',
+    path: '/articles',
     element: (
       <AuthenticatedRoute>
-        <FeedPage />
+        <ArticleContextProvider>
+          <Outlet />
+        </ArticleContextProvider>
       </AuthenticatedRoute>
     ),
+    children: [
+      { index: true, element: <ArticlesPage /> },
+      { path: ':article_id', element: <ArticlePage /> },
+    ],
   },
   { path: '/signin', element: <SignInPage /> },
   { path: '/signup', element: <SignUpPage /> },

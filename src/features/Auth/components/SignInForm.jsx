@@ -12,7 +12,7 @@ export const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await signin(email, password);
-    navigate('/feed');
+    navigate('/articles');
   };
 
   return (
